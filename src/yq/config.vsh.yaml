@@ -1,8 +1,8 @@
 name: yq
-description: a lightweight and portable command-line YAML processor
-keywords: [ yaml ]
+description: A portable YAML, JSON, XML, CSV, TOML and properties processor
+keywords: [ yaml, json, xml, csv, toml, properties ]
 links:
-  homepage: https://github.com/mikefarah/yq
+  homepage: https://mikefarah.gitbook.io/yq
   documentation: https://mikefarah.gitbook.io/yq/
   repository: https://github.com/mikefarah/yq
 license: MIT
@@ -35,12 +35,14 @@ argument_groups:
         alternatives: -I
       - name: --input_format
         type: string
-        description: '[auto|a|yaml|y|json|j|props|p|csv|c|tsv|t|xml|x|base64|uri|toml|shell|s|lua|l] parse format for input. (default "auto")'
+        description: 'parse format for input. (default "auto")'
         alternatives: -p
+        choices: [ auto, a, yaml, "y", json, j, props, p, csv, c, tsv, t, xml, x, base64, uri, toml, shell, s, lua, l ]
       - name: --output_format
         type: string
-        description: '[auto|a|yaml|y|json|j|props|p|csv|c|tsv|t|xml|x|base64|uri|toml|shell|s|lua|l] output format type. (default "auto")'
+        description: 'output format type. (default "auto")'
         alternatives: -o
+        choices: [ auto, a, yaml, "y", json, j, props, p, csv, c, tsv, t, xml, x, base64, uri, toml, shell, s, lua, l ]
       - name: --pretty_print
         type: boolean_true
         description: pretty print, shorthand for '... style = ""'
@@ -52,19 +54,20 @@ resources:
       #!/bin/sh
       [[ "$par_pretty_print" == "false" ]] && unset par_pretty_print
       yq eval \
-      ${par_indent:+-I "${par_indent}"} \
-      ${par_input_format:+-p "${par_input_format}"} \
-      ${par_output_format:+-o "${par_output_format}"} \
-      ${par_pretty_print:+-P} \
-      --expression "$par_eval" \
-      --no-colors \
-      "$par_input" > "$par_output"
+        ${par_indent:+-I "${par_indent}"} \
+        ${par_input_format:+-p "${par_input_format}"} \
+        ${par_output_format:+-o "${par_output_format}"} \
+        ${par_pretty_print:+-P} \
+        --expression "$par_eval" \
+        --no-colors \
+        "$par_input" > "$par_output"
 test_resources:
   - type: bash_script
     text: |
       set -e
-      "$meta_executable" --input .config.vsh.yaml --output .config.vsh.yaml.out --eval '.name = "foo"'
-      grep 'name: "foo"' .config.vsh.yaml.out
+      echo "name: 'bar'" > test.yaml
+      "$meta_executable" --input test.yaml --output output.yaml --eval '.name = "foo"'
+      grep 'name: "foo"' output.yaml
 
 engines:
   - type: docker
