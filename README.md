@@ -17,8 +17,8 @@ A collection of command-line tools.
 
 - **Reusability**: Facilitating the use of components across various
   projects and contexts.
-- **Reproducibility**: Guaranteeing that bioinformatics analyses can be
-  reliably replicated.
+- **Reproducibility**: Ensuring that components are reproducible and can
+  be easily shared.
 - **Best Practices**: Adhering to established standards in software
   development and bioinformatics.
 
