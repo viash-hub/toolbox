@@ -4,7 +4,6 @@ on:
   workflow_call:
   pull_request:
   push:
-    branches: [ '**' ]
 
 jobs:
   run_ci_check_job:
