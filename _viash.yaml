@@ -1,0 +1,13 @@
+name: toolbox
+description: |
+  A collection of command-line tools.
+license: MIT
+keywords: [toolbox, command-line, tools]
+links:
+  issue_tracker: https://github.com/viash-hub/toolbox/issues
+  repository: https://github.com/viash-hub/toolbox
+
+viash_version: 0.9.0-RC6
+
+config_mods: |
+  .requirements.commands := ['ps']
