@@ -67,7 +67,8 @@ test_resources:
       set -e
       echo "name: 'bar'" > test.yaml
       "$meta_executable" --input test.yaml --output output.yaml --eval '.name = "foo"'
-      grep "name: 'foo'" output.yaml
+      "$meta_executable" --input output.yaml --output output2.yaml --eval '.name'
+      grep "^foo$" output2.yaml
 
 engines:
   - type: docker
