@@ -1,4 +1,5 @@
 name: toolbox
+version: v0.1.0
 description: |
   A collection of command-line tools.
 license: MIT
