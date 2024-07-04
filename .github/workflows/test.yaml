@@ -1,4 +1,4 @@
-name: Component Testing
+name: Test
 
 on:
   workflow_call:
@@ -9,55 +9,44 @@ jobs:
   run_ci_check_job:
     runs-on: ubuntu-latest
     outputs:
-      run_ci: ${{ steps.github_cli.outputs.check }}
+      run: ${{ steps.github_cli.outputs.run }}
     steps:
       - name: 'Check if branch has an existing pull request and the trigger was a push'
         id: github_cli
-        run: |
-          pull_request=$(gh pr list -R ${{ github.repository }} -H ${{ github.ref_name }} --json url --state open --limit 1 | jq '.[0].url')
-          # If the branch has a PR and this run was triggered by a push event, do not run
-          if [[ "$pull_request" != "null" && "$GITHUB_REF_NAME" != "main" && "${{ github.event_name == 'push' }}" == "true" && "${{ !contains(github.event.head_commit.message, 'ci force') }}" == "true" ]]; then
-            echo "check=false" >> $GITHUB_OUTPUT
-          else
-            echo "check=true" >> $GITHUB_OUTPUT
-          fi
-        env:
-           GH_TOKEN: ${{ github.token }}
+        uses: viash-io/viash-actions/project/check-concurrent-pr@v6
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
 
   # phase 1
   list:
     needs: run_ci_check_job
     runs-on: ubuntu-latest
-    if: ${{ needs.run_ci_check_job.outputs.run_ci == 'true' }}
+    if: ${{ needs.run_ci_check_job.outputs.run == 'true' }}
 
     outputs:
-      matrix: ${{ steps.ns_list_filtered.outputs.output_matrix }}
+      matrix: ${{ steps.ns_list_filter.outputs.output_matrix }}
+      cache_key: ${{ steps.cache.outputs.cache_key }}
+      dest_paths: ${{ steps.cache.outputs.dest_paths }}
 
     steps:
     - uses: actions/checkout@v4
       with:
         fetch-depth: 0
-        
-    - uses: viash-io/viash-actions/setup@v5
+        submodules: 'recursive'
 
-    - name: Check if all config can be parsed if there is no unicode support
-      run: |
-        LANG=C viash ns list > /dev/null
+    - uses: viash-io/viash-actions/setup@v6
 
-    - name: Get changed files
-      id: changed-files
-      uses: tj-actions/changed-files@v42
-      with:
-        separator: ";"
-        diff_relative: true
+    - uses: viash-io/viash-actions/project/sync-and-cache@v6
+      id: cache
+
     - id: ns_list
-      uses: viash-io/viash-actions/ns-list@viash-0.9
+      uses: viash-io/viash-actions/ns-list@v6
       with:
-        engine: docker
-        runner: executable
         format: json
-    - id: ns_list_filtered
-      uses: viash-io/viash-actions/project/detect-changed-components@viash-0.9
+        runner: executable
+
+    - id: ns_list_filter
+      uses: viash-io/viash-actions/project/detect-changed-components@v6
       with:
         input_file: "${{ steps.ns_list.outputs.output_file }}"
 
@@ -74,16 +63,31 @@ jobs:
 
     steps:
     # Remove unnecessary files to free up space. Otherwise, we get 'no space left on device.'
-    - uses: data-intuitive/reclaim-the-bytes@v2
+    - name: Clear space
+      uses: data-intuitive/reclaim-the-bytes@v2
+    
+    - name: Check out repository
+      uses: actions/checkout@v4
+      with:
+        submodules: 'recursive'
+        fetch-depth: 0
+        
+    - name: Install Viash
+      uses: viash-io/viash-actions/setup@v6
 
-    - uses: actions/checkout@v4
-
-    - uses: viash-io/viash-actions/setup@v5
+    # use cache
+    - name: Cache resources data
+      uses: actions/cache/restore@v4
+      timeout-minutes: 10
+      with:
+        path: ${{ needs.list.outputs.dest_paths }}
+        key: ${{ needs.list.outputs.cache_key }}
 
     - name: Run test
       timeout-minutes: 30
       run: |
+        export VIASH_TEMP=$RUNNER_TEMP/viash_test_temp
         viash test \
           "${{ matrix.component.config }}" \
           --cpus 2 \
-          --memory "6gb"
+          --memory "16gb"
