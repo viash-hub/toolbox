@@ -2,7 +2,7 @@
 
 ## MINOR CHANGES
 
-* Updated the test CI (PR #xx).
+* Updated the test CI (PR #6).
 
 # toolbox v0.1.0
 
