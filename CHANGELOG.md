@@ -1,5 +1,11 @@
 # toolbox unreleased
 
+## MINOR CHANGES
+
+* Updated the test CI (PR #xx).
+
+# toolbox v0.1.0
+
 ## NEW FEATURES
 
 * `bgzip`: Add bgzip functionality to compress and decompress files (initial commit).
