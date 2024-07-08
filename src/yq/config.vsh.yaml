@@ -16,6 +16,7 @@ argument_groups:
         direction: input
         description: files to be processed
         required: true
+        example: input.yaml
   - name: Outputs
     arguments:
       - name: --output
@@ -23,12 +24,14 @@ argument_groups:
         direction: output
         description: output file
         required: true
+        example: output.yaml
   - name: Arguments
     arguments:
       - name: --eval
         type: string
         description: expression to evaluate
         required: true
+        example: '.name = "foo"'
       - name: --indent
         type: integer
         description: sets indent level for output (default 2)
