@@ -36,10 +36,10 @@ argument_groups:
       - name: --bias
         type: string
         description: add bias when convolving an image
-      - name: --black-point-compensation
+      - name: --black_point_compensation
         type: boolean_true
         description: use black point compensation
-      - name: --blue-primary
+      - name: --blue_primary
         type: string
         description: chromaticity blue primary point
       - name: --bordercolor
@@ -51,10 +51,10 @@ argument_groups:
       - name: --clip
         type: boolean_true
         description: clip along the first path from the 8BIM profile
-      - name: --clip-mask
+      - name: --clip_mask
         type: string
         description: associate a clip mask with the image
-      - name: --clip-path
+      - name: --clip_path
         type: string
         description: clip along a named path from the 8BIM profile
       - name: --colorspace
@@ -171,8 +171,7 @@ argument_groups:
   # -write-mask filename associate a write mask with the image  -word-break type     sets whether line breaks appear wherever the text would otherwise overflow
   
   - name: Image Operators
-    arguments:
-    []
+    arguments: []
   # -adaptive-blur geometry
   #                      adaptively blur pixels; decrease effect near edges
   # -adaptive-resize geometry
@@ -353,15 +352,13 @@ argument_groups:
   #                      force all pixels above the threshold into white
 
   - name: Image Channel Operators
-    arguments:
-    []
+    arguments: []
   # -channel-fx expression
   #                      exchange, extract, or transfer one or more image channels
   # -separate            separate an image channel into a grayscale image
 
   - name: Image Sequence Operators
-    arguments:
-    []
+    arguments: []
   # -append              append an image sequence
   # -clut                apply a color lookup table to the image
   # -coalesce            merge a sequence of images
@@ -389,8 +386,7 @@ argument_groups:
   # -write filename      write images to this file
 
   - name: Image Stack Operators
-    arguments:
-    []
+    arguments: []
   # -clone indexes       clone an image
   # -delete indexes      delete the image from the image sequence
   # -duplicate count,indexes
@@ -400,8 +396,7 @@ argument_groups:
   # -swap indexes        swap two images in the image sequence
 
   - name: Miscellaneous Options
-    arguments: 
-    []
+    arguments: []
   # -debug events        display copious debugging information
   # -distribute-cache port
   #                      distributed pixel cache spanning one or more servers
