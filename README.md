@@ -9,7 +9,7 @@ License](https://img.shields.io/github/license/viash-hub/toolbox.png)](https://g
 [![GitHub
 Issues](https://img.shields.io/github/issues/viash-hub/toolbox.png)](https://github.com/viash-hub/toolbox/issues)
 [![Viash
-version](https://img.shields.io/badge/Viash-v0.9.0--RC6-blue)](https://viash.io)
+version](https://img.shields.io/badge/Viash-v0.9.0--RC7-blue)](https://viash.io)
 
 A collection of command-line tools.
 
