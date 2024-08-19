@@ -4,6 +4,8 @@
 
 * Updated the test CI (PR #6).
 
+* Bump viash to 0.9.0-RC7 (PR #10).
+
 # toolbox v0.1.0
 
 ## NEW FEATURES
