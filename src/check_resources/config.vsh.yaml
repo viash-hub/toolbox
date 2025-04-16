@@ -2,6 +2,15 @@ name: check_resources
 description: Check for available resources on the system.
 
 argument_groups:
+  - name: Inputs
+    arguments:
+      - name: --input
+        type: string
+        direction: input
+        description: Input file containing system resources details.
+        required: true
+        default: input.txt
+
   - name: Options
     arguments:
       - name: --req_disk_space
