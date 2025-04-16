@@ -1,0 +1,23 @@
+name: check_resources
+description: Check if resources are available
+
+argument_groups:
+  - name: Options
+    arguments:
+      - name: --threshold
+        type: integer
+        description: threshold for resource check
+        required: true
+        default: 80
+
+resources:
+  - type: bash_script
+    path: script.sh
+
+engines:
+  - type: docker
+    image: bash:latest
+
+runners:
+  - type: executable
+  - type: nextflow
