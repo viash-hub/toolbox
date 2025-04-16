@@ -1,5 +1,5 @@
 name: check_resources
-description: Check if resources are available
+description: Check for available resources on the system.
 
 argument_groups:
   - name: Options
@@ -9,6 +9,15 @@ argument_groups:
         description: Required disk space percentage.
         required: true
         default: 20
+
+  - name: Outputs
+    arguments:
+      - name: --output
+        type: file
+        direction: output
+        description: Output file containing system resources details.
+        required: true
+        default: output.txt
 
 resources:
   - type: bash_script
