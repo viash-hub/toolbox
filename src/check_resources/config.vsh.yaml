@@ -4,11 +4,11 @@ description: Check if resources are available
 argument_groups:
   - name: Options
     arguments:
-      - name: --threshold
+      - name: --req_disk_space
         type: integer
-        description: threshold for resource check
+        description: Required disk space percentage.
         required: true
-        default: 80
+        default: 20
 
 resources:
   - type: bash_script
