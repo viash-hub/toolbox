@@ -5,11 +5,11 @@ argument_groups:
   - name: Inputs
     arguments:
       - name: --input
-        type: string
+        type: file
         direction: input
-        description: Input file containing system resources details.
+        description: Input yaml file containing input parameters of a workflow.
         required: true
-        default: input.txt
+        default: input.yaml
 
   - name: Options
     arguments:
