@@ -46,7 +46,7 @@ cat(
 
 You can run this component directly from the Viash Hub [Launch interface](https://www.viash-hub.com/launch?package=`r pkg`&version=`r ver`&component=`r comp`&runner=Executable).
 
-![](docs/viash-hub.png)
+![](https://raw.githubusercontent.com/`r package$organization`/`r pkg`/refs/heads/main/docs/viash-hub.png)
 
 ### 2. Via the Viash CLI
 
@@ -117,4 +117,3 @@ knitr::asis_output(
 ```
 
 See the [CONTRIBUTING](`r contributing`) file for more details.
-
