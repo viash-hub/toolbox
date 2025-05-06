@@ -53,7 +53,7 @@ flowchart TD
 You can run this component directly from the Viash Hub [Launch
 interface](https://www.viash-hub.com/launch?package=toolbox&version=v0.1.0&component=yq&runner=Executable).
 
-![](https://raw.githubusercontent.com/viash-hub/toolbox/refs/heads/main/docs/viash-hub.png)
+![](docs/viash-hub.png)
 
 ### 2. Via the Viash CLI
 
