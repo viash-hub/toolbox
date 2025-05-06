@@ -1,4 +1,16 @@
-# toolbox unreleased
+# toolbox v0.1.1
+
+## MINOR CHANGES
+
+* Updated the test CI (PR #6).
+
+* Bump viash to 0.9.0 (PR #10).
+
+* Bump viash to 0.9.4 (PR #13).
+
+* Update README (PR #13).
+
+# toolbox v0.1.0
 
 ## NEW FEATURES
 

@@ -1,14 +1,26 @@
 name: toolbox
-version: v0.1.0
+version: v0.1.1
+summary: |
+  A collection of curated command-line tools for general IT tasks, built with Viash.
 description: |
-  A collection of command-line tools.
+  `toolbox` provides a versatile suite of IT components, following the robust Viash (https://viash.io) framework.
+  This package focuses on delivering reliable, standalone tools that can be easily integrated into larger computational workflows.
+
+  The core philosophy emphasizes **reusability**, **reproducibility**, and adherence to **best practices** in component creation. Key features of `toolbox` components include:
+
+  * **Standalone & Nextflow Ready:** Execute components directly from the command line or seamlessly incorporate them into Nextflow workflows.
+  * **High Quality Standards:**
+      * Comprehensive documentation for each component and its parameters.
+      * Full exposure of the underlying tool's arguments for maximum flexibility.
+      * Containerized (Docker) to ensure consistent environments and manage dependencies, leading to enhanced reproducibility.
+      * Unit tested to verify functionality and ensure reliability.
 license: MIT
 keywords: [toolbox, command-line, tools]
 links:
   issue_tracker: https://github.com/viash-hub/toolbox/issues
   repository: https://github.com/viash-hub/toolbox
 
-viash_version: 0.9.0-RC6
+viash_version: 0.9.4
 
 config_mods: |
   .requirements.commands := ['ps']
