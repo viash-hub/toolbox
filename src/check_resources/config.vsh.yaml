@@ -1,0 +1,41 @@
+name: check_resources
+description: Check for available resources on the system.
+
+argument_groups:
+  - name: Inputs
+    arguments:
+      - name: --input
+        type: file
+        direction: input
+        description: Input yaml file containing input parameters of a workflow.
+        required: true
+        default: input.yaml
+
+  - name: Options
+    arguments:
+      - name: --req_disk_space
+        type: integer
+        description: Required disk space percentage.
+        required: true
+        default: 20
+
+  - name: Outputs
+    arguments:
+      - name: --output
+        type: file
+        direction: output
+        description: Output file containing system resources details.
+        required: true
+        default: output.txt
+
+resources:
+  - type: bash_script
+    path: script.sh
+
+engines:
+  - type: docker
+    image: bash:latest
+
+runners:
+  - type: executable
+  - type: nextflow
