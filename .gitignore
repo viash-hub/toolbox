@@ -1,59 +1,18 @@
-# IDEs and editors
-/.idea
-.project
-.classpath
-*.launch
-.settings/
-.vscode
+*.DS_Store
+*__pycache__
 
-# Temp
-gitignore
-test_results
+# IDE ignores
+.idea/
+.vscode/
 
-# System Files
-.DS_Store
-Thumbs.db
+# R specific ignores
+.Rhistory
+.Rproj.user
+*.Rproj
 
-# Nextflow
+# viash specific ignores
+target/
+
+# nextflow specific ignores
+.nextflow*
 work
-.nextflow*
-
-# viash
-/target/
-check_results/
-out/
-output*
-output_log/
-resources_test
-/viash_tools/
-/test/
-
-# jupyter notebook
-/.ipynb_checkpoints/
-*.ipynb
-
-# compress
-/__MACOSX/
-
-# python
-*__pycache__*
-
-# Python virtual environments
-.venv
-
-# temporary files related
-temp
-
-# NextFlow
-work/
-.nextflow.log
-.nextflow*
-out/ 
-trace*.txt
-
-# Macos
-.DS_Store
-
-# vscode
-.vscode/launch.json
-.vscode/settings.json
