@@ -1,3 +1,9 @@
+# toolbox v0.1.2
+
+## NEW FEATURES
+
+* `check_resources`: Add functionality to check available system resources (PR #12).
+
 # toolbox v0.1.1
 
 ## MINOR CHANGES
