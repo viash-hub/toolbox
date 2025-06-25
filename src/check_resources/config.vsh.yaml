@@ -1,5 +1,16 @@
 name: check_resources
-description: Check for available resources on the system.
+description: |
+  Check for available resources on the system.
+
+  This component is only useful when working with persistent storage environments
+  where all workflow steps execute on the same instance or share the same
+  storage volume. That is, running thus component on e.g. AWS Batch or
+  other cloud-based systems will not work as expected, since each step
+  can run on a different instance and resources will not be shared.
+  
+  For distributed environments, consider integrating resource checks directly
+  into the components that will actually consume the storage, rather than
+  using this standalone check.
 
 argument_groups:
   - name: Inputs
