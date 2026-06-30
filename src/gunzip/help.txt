@@ -1,0 +1,7 @@
+cat <<EOF > src/gunzip/help.txt
+```sh
+gunzip --help
+```
+EOF
+
+docker run quay.io/biocontainers/gzip:1.11 gunzip --help >> src/gunzip/help.txt

@@ -1,0 +1,96 @@
+name: gunzip
+description: Decompress files compressed with gzip
+keywords: [ "decompress", "gzip", "gunzip", "*.gz" ]
+links:
+  homepage: https://www.gnu.org/software/gzip/manual/
+  documentation: https://www.gnu.org/software/gzip/manual/gzip.html
+  repository: https://cgit.git.savannah.gnu.org/cgit/gzip.git/
+  issue_tracker: https://savannah.gnu.org/bugs/?group=gzip          # Tracker turned off by group.
+license: GPL-3.0
+requirements:
+  commands: [ gunzip ]
+
+argument_groups:
+- name: Inputs
+  arguments:
+  - name: --input
+    type: file 
+    direction: input
+    description: Path of file to be decompressed
+    required: true
+
+- name: Outputs
+  arguments:  
+  - name: --output
+    type: file
+    direction: output
+    required: true
+    description: Decompressed file 
+
+- name: Arguments
+  arguments:
+  - name: --force
+    alternatives: -f
+    type: boolean_true
+    description: force overwrite of output file and compress links
+  - name: --keep
+    alternatives: -k
+    type: boolean_true
+    description: keep input files
+  - name: --list 
+    alternatives: -l
+    type: boolean_true
+    description: list compressed file contents
+  - name: --no_name
+    alternatives: -n
+    type: boolean_true
+    description: do not save or restore the original name and time stamp
+  - name: --name
+    alternatives: -N
+    type: boolean_true
+    description: save or restore the original name and time stamp
+  - name: --quiet
+    alternatives: -q
+    type: boolean_true
+    description: suppress all warnings
+  - name: --recursive
+    alternatives: -r
+    type: boolean_true
+    description: operate recursively on directories
+  - name: --suffix
+    alternatives: -S
+    type: string
+    description: Uncompress all files in the current working directory whose suffix matches a given pattern
+  - name: --synchronous
+    type: boolean_true
+    description: synchronous output (safer if system crashes, but slower)
+  - name: --test
+    alternatives: -t
+    type: boolean_true
+    description: test compressed file integrity
+  - name: --verbose
+    alternatives: -v
+    type: boolean_true
+    description: verbose mode
+  
+resources:
+  - type: bash_script
+    path: script.sh
+
+test_resources:
+  - type: bash_script
+    path: test.sh
+  - type: file
+    path: test_data
+  
+engines:
+  - type: docker
+    image: quay.io/biocontainers/gzip:1.11
+    setup:
+      - type: docker
+        run: |
+          gunzip --version | sed 's/gunzip, version\s\(.*\)/gunzip: "\1"/' > /var/software_versions.txt
+
+runners:
+  - type: executable
+  - type: nextflow
