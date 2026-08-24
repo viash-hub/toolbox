@@ -1,7 +1,7 @@
 # toolbox v0.1.1
 
 ## NEW FEATURES
-`gunzip`: Add gunzip functionality to decompress gzip-compressed files.
+* `gunzip`: Add gunzip functionality to decompress gzip-compressed files (PR #15).
 
 
 ## MINOR CHANGES

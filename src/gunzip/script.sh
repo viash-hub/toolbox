@@ -26,7 +26,7 @@ gunzip -c \
     ${par_quiet:+-q } \
     ${par_recursive:+-r } \
     ${par_suffix:+-S "${par_suffix}"} \
-    ${par_synchronous: } \
+    ${par_synchronous:+--synchronous} \
     ${par_test:+-t } \
     ${par_verbose:+-v } \
     "$par_input" > "$par_output"
