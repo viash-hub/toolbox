@@ -1,0 +1,108 @@
+name: gzip
+description: |
+  Compress or decompress files using GNU `gzip`.
+
+  The result is always written to `--output`; the input file is left untouched.
+keywords: [ "compress", "decompress", "gzip", "*.gz" ]
+links:
+  homepage: https://www.gnu.org/software/gzip/
+  documentation: https://www.gnu.org/software/gzip/manual/gzip.html
+  repository: https://cgit.git.savannah.gnu.org/cgit/gzip.git/
+  issue_tracker: https://savannah.gnu.org/bugs/?group=gzip
+license: GPL-3.0
+requirements:
+  commands: [ gzip ]
+
+argument_groups:
+- name: Inputs
+  arguments:
+  - name: --input
+    type: file
+    direction: input
+    description: |
+      Path of the file to be compressed, or of the gzip-compressed file (`.gz`)
+      to be decompressed when `--decompress` is set.
+    required: true
+    example: input.txt
+
+- name: Outputs
+  arguments:
+  - name: --output
+    type: file
+    direction: output
+    description: |
+      Path of the compressed (`.gz`) or decompressed output file.
+    required: true
+    example: output.txt.gz
+
+- name: Arguments
+  arguments:
+  - name: --decompress
+    alternatives: -d
+    type: boolean_true
+    description: |
+      Decompress the input file instead of compressing it.
+  - name: --compress_level
+    type: integer
+    description: |
+      Compression level, from `1` (fastest, least compression) to `9` (slowest, best compression).
+
+      Corresponds to the `-1` to `-9` (`--fast` / `--best`) options of `gzip`. Default: `6`.
+    min: 1
+    max: 9
+    example: 6
+  - name: --no_name
+    alternatives: -n
+    type: boolean_true
+    description: |
+      When compressing, do not store the original file name and timestamp in the output.
+
+      Useful to produce reproducible output: compressing the same content always gives the same bytes.
+  - name: --name
+    alternatives: -N
+    type: boolean_true
+    description: |
+      When compressing, store the original file name and timestamp in the output.
+      This is the default behaviour of `gzip`.
+  - name: --rsyncable
+    type: boolean_true
+    description: |
+      Make an rsync-friendly archive, at the cost of a slightly larger output.
+  - name: --force
+    alternatives: -f
+    type: boolean_true
+    description: |
+      Force compression or decompression, even if the input has multiple links.
+      When decompressing, input that is not in a recognized compressed format is copied through unchanged.
+  - name: --quiet
+    alternatives: -q
+    type: boolean_true
+    description: |
+      Suppress all warnings.
+  - name: --verbose
+    alternatives: -v
+    type: boolean_true
+    description: |
+      Verbose mode: display the name and percentage reduction for each file.
+
+resources:
+  - type: bash_script
+    path: script.sh
+
+test_resources:
+  - type: bash_script
+    path: test.sh
+
+engines:
+  - type: docker
+    image: alpine:latest
+    setup:
+      - type: apk
+        packages: [bash, gzip]
+      - type: docker
+        run:
+          - 'gzip --version 2>&1 | head -1 | sed ''s/^gzip \(.*\)/gzip: "\1"/'' > /var/software_versions.txt'
+
+runners:
+  - type: executable
+  - type: nextflow
