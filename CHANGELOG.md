@@ -3,6 +3,8 @@
 ## NEW FEATURES
 * `gunzip`: Add gunzip functionality to decompress gzip-compressed files (PR #15).
 
+* `mermaid/mermaid_cli`: Render Mermaid diagrams and Markdown files to SVG, PNG or PDF using mermaid-cli (PR #16).
+
 
 ## MINOR CHANGES
 
