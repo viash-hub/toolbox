@@ -1,0 +1,165 @@
+name: mermaid_cli
+namespace: mermaid
+description: |
+  Render Mermaid diagram definitions into SVG, PNG or PDF files using the
+  Mermaid command-line interface (mmdc). Markdown files can also be used as
+  input, in which case all Mermaid charts are extracted and rendered, and the
+  Markdown file is rewritten to reference the generated images.
+keywords: [mermaid, diagram, flowchart, chart, svg, png, pdf, markdown]
+links:
+  homepage: https://mermaid.js.org
+  documentation: https://github.com/mermaid-js/mermaid-cli#readme
+  repository: https://github.com/mermaid-js/mermaid-cli
+  issue_tracker: https://github.com/mermaid-js/mermaid-cli/issues
+license: MIT
+requirements:
+  commands: [ mmdc ]
+
+argument_groups:
+  - name: Inputs
+    arguments:
+      - name: --input
+        alternatives: -i
+        type: file
+        direction: input
+        required: true
+        description: |
+          Input Mermaid file. Files ending in .md will be treated as Markdown and
+          all charts (e.g. ```mermaid (...)``` or :::mermaid (...):::) will be
+          extracted and generated.
+        example: diagram.mmd
+      - name: --config_file
+        alternatives: -c
+        type: file
+        direction: input
+        description: JSON configuration file for Mermaid.
+        example: config.json
+      - name: --css_file
+        alternatives: -C
+        type: file
+        direction: input
+        description: CSS file for the page, used as Mermaid's `themeCSS`.
+        example: style.css
+      - name: --puppeteer_config_file
+        alternatives: -p
+        type: file
+        direction: input
+        description: |
+          JSON configuration file for Puppeteer. If not provided, a default
+          configuration is used which runs Chromium without a sandbox.
+        example: puppeteer-config.json
+
+  - name: Outputs
+    arguments:
+      - name: --output
+        alternatives: -o
+        type: file
+        direction: output
+        required: true
+        description: |
+          Output file. It should end in either .md, .svg, .png or .pdf. Use .md
+          when the input is a Markdown file.
+        example: diagram.svg
+      - name: --artefacts
+        alternatives: -a
+        type: file
+        direction: output
+        description: |
+          Output directory for the rendered images. Only used with a Markdown
+          input file. Defaults to the directory of the output file.
+        example: artefacts
+
+  - name: Arguments
+    arguments:
+      - name: --output_format
+        alternatives: -e
+        type: string
+        choices: [svg, png, pdf]
+        description: |
+          Output format for the generated image. Defaults to the extension of
+          the output file, or svg for Markdown output.
+      - name: --theme
+        alternatives: -t
+        type: string
+        choices: [base, dark, default, forest, neutral, neo, neo-dark, redux, redux-dark, redux-color, redux-dark-color, "null"]
+        description: Theme of the chart.
+      - name: --size
+        type: integer
+        min: 1
+        description: |
+          Size of the diagram. This will attempt to create a PNG with a maximum
+          height or width equal to the given size. For SVGs, this will set the
+          `max-width` attribute. For PDFs, this is in CSS px, which is 1/96 of
+          an inch.
+      - name: --background_color
+        alternatives: -b
+        type: string
+        description: |
+          Background color for PNGs and SVGs (not PDFs). Default: white.
+        example: transparent
+      - name: --svg_id
+        alternatives: -I
+        type: string
+        description: The id attribute for the SVG element to be rendered.
+      - name: --scale
+        alternatives: -s
+        type: integer
+        min: 1
+        description: "Puppeteer scale factor. Default: 1."
+      - name: --no_font_embed
+        type: boolean_true
+        description: |
+          Disable embedding fonts into the SVG. This cuts down on SVG size, but
+          would result in missing fonts if they are not available on the system.
+      - name: --pdf_paper_format
+        type: string
+        choices: [Letter, Legal, Tabloid, Ledger, A0, A1, A2, A3, A4, A5, A6]
+        description: |
+          If set, output a PDF with the given paper size, instead of fitting
+          the diagram.
+      - name: --icon_packs
+        type: string
+        multiple: true
+        description: |
+          Installed icon packs to use, e.g. @iconify-json/logos. These should be
+          Iconify NPM packages that expose an icons.json file.
+      - name: --icon_packs_names_and_urls
+        type: string
+        multiple: true
+        description: |
+          Icon packs to use, e.g. azure#file:///tmp/icons.json, where the name
+          (prefix) of the icon pack is defined before the "#" and the URL of the
+          JSON definition after the "#". These will be downloaded when needed.
+          Use file:// URIs to reference local files.
+        example: "logos#https://unpkg.com/@iconify-json/logos/icons.json"
+      - name: --quiet
+        alternatives: -q
+        type: boolean_true
+        description: Suppress log output.
+
+resources:
+  - type: bash_script
+    path: script.sh
+
+test_resources:
+  - type: bash_script
+    path: test.sh
+
+engines:
+  - type: docker
+    image: node:26-bookworm-slim
+    setup:
+      - type: apt
+        packages: [procps, chromium, fonts-liberation, fonts-noto-color-emoji]
+      - type: docker
+        env:
+          - PUPPETEER_SKIP_DOWNLOAD=true
+        run: |
+          npm install --global @mermaid-js/mermaid-cli@12.0.0 && \
+          npm cache clean --force && \
+          echo '{"executablePath": "/usr/bin/chromium", "args": ["--no-sandbox", "--disable-gpu"]}' > /puppeteer-config.json && \
+          mmdc --version | sed 's/\(.*\)/mermaid-cli: "\1"/' > /var/software_versions.txt
+
+runners:
+  - type: executable
+  - type: nextflow
