@@ -4,6 +4,8 @@
 
 * `gunzip`: Add gunzip functionality to decompress gzip-compressed files (PR #15).
 
+* `gzip`: Add gzip functionality to compress and decompress files (PR #16).
+
 # toolbox v0.1.1
 
 ## MINOR CHANGES
